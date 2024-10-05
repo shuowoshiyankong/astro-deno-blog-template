@@ -27,16 +27,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      - name: Install pnpm
+        use: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
 
       - name: Install step
-        run: "npm install"
+        run: "pnpm install"
 
       - name: Build step
-        run: "npm run build"
+        run: "pnpm build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "shuowoshiya-astro-deno-86"
-          entrypoint: "server/entry.mjs"
+          entrypoint: "https://jsr.io/@std/http/1.0.7/file_server.ts"
           root: "dist"
